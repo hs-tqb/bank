@@ -1,0 +1,84 @@
+
+@color-primary:#1ba5fd;
+@color-danger:#f56c6c;
+@color-warning:#e79f21;
+@color-success:#67C23A;
+@color-info:#909399;
+@color-text-primary:#333;
+@color-text-regular:#666;
+@color-text-secondary:#999;
+@color-text-placeholder:#ccc;
+@color-border-base:#dcdfe6;
+@color-border-light:#e4e7ed;
+@color-border-lighter:#ebeef5;
+@color-border-lightest:#f2f6fc;
+
+.text(primary) { color:@color-primary; }
+.text(danger)  { color:@color-danger; }
+.text(success) { color:@color-success; }
+.text(info)    { color:@color-info; }
+.text(placeholder) { color:@color-text-placeholder; }
+
+// 缩略
+.text-ellipsis() { text-overflow:ellipsis; white-space: nowrap; }
+
+// 布局
+// .flex()         { display:flex; flex-direction:column; }
+.flex(@n)       { flex:@n; }
+.flow(@d:row;@w:nowrap;@j:flex-start;@a:flex-start) { 
+  display:flex; flex-flow:@d @w;
+  justify-content:@j; align-items:@a;
+}
+
+.justify(c)  { justify-content:center; }
+.justify(fs) { justify-content:flex-start; }
+.justify(fe) { justify-content:flex-end; }
+.justify(sb) { justify-content:space-between; }
+.justify(sa) { justify-content:space-around; }
+
+.justify(@p:center) { justify-content:@p; }
+
+.align(s)  { align-items:stretch; }
+.align(c)  { align-items:center; }
+.align(fs) { align-items:flex-start; }
+.align(fe) { align-items:flex-end; }
+.align(@p:center) { align-items:@p; }
+
+
+.scroll() {
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.border(around;@w:1px;@s:solid;@c:@color-border-base) {
+  border:@w @s @c;
+}
+.border(top;@w:1px;@s:solid;@c:@color-border-base) {
+  border-top:@w @s @c;
+}
+.border(bottom;@w:1px;@s:solid;@c:@color-border-base) {
+  border-bottom:@w @s @c;
+}
+.border(left;@w:1px;@s:solid;@c:@color-border-base) {
+  border-left:@w @s @c;
+}
+.border(right;@w:1px;@s:solid;@c:@color-border-base) {
+  border-right:@w @s @c;
+}
+.radius(@w:3px) {
+  border-radius:@w
+}
+
+.relative() { position:relative; }
+.box(border)  { box-sizing:border-box; }
+.box(content) { box-sizing:content-box; }
+
+
+.bg(@c:transparent;@i:url();@r:no-repeat;@p:center;@s) { 
+  background:@c @i @r @p/@s;
+ }
+.bgc(@c) { background-color:@c; }
+.transparent() { background-color:transparent; }
+
+
+.block() { display:block; }

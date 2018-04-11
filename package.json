@@ -1,0 +1,35 @@
+{
+  "name": "val-bank",
+  "version": "1.0.0",
+  "description": "Nuxt.js project",
+  "author": "HS <huangshuai@utianqi.com>",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "test": "cross-env PORT=3001 nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cross-env": "^5.1.4",
+    "nuxt": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.15.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-vue": "^4.0.0",
+    "less": "^3.0.1",
+    "less-loader": "^4.1.0"
+  },
+  "config": {
+    "nuxt": {
+      "port":"3200"
+    }
+  }
+}
