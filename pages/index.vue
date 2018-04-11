@@ -7,7 +7,10 @@
     min-width:260px;
     padding-top:1px;
     font-size:12px;
-    h1 { font-size:18px; font-weight:500; color:@color-text-primary; }
+    h1 { 
+      font-size:18px; font-weight:500; color:@color-text-primary; 
+      span { font-size:12px; color:@color-info; vertical-align:top; }
+    }
     .panel { 
       padding:15px 25px; 
       label { 
@@ -38,7 +41,7 @@
   <div id="page-home">
     <input id="login" type="button" class="btn text primary" value="已有帐号" @click="$router.push('/login')"/>
     <a id="logo" href="http://valp.io" target="_blank"></a>
-    <h1 class="text-center">{{lang.title}}</h1>
+    <h1 class="text-center" v-html="lang.title"></h1>
     <div class="panel">
       <ul class="inp-list">
         <li v-for="(item,key) in input" :key="`input-${key}`">
@@ -100,7 +103,7 @@ export default {
   data () {
     return {
       cn  :{
-        title:'ValPromise 区块链银行 Beta',
+        title:'ValPromise 区块链银行 <span>Beta</span>',
         input: {
           name: {
             label:'姓名',
@@ -135,6 +138,9 @@ export default {
           key:{
             label:'糖果兑换码',
             warning:'兑换码不能为空'
+          },
+          wechat: {
+            label:'微信',
           }
         },
         confirm:'领取',
@@ -202,10 +208,14 @@ export default {
             return !isNaN(+this.value.trim()) && +this.value.trim()>=0.1;
           }
         },
-        key:{
-          id:'sdkvfjfssl',
-          value:'',
-          required:true,
+        // key:{
+        //   id:'sdkvfjfssl',
+        //   value:'',
+        //   required:true,
+        // }
+        wechat: {
+          id:'xkdusdjfsdfkusduf',
+          value:''
         }
       },
       website: {
