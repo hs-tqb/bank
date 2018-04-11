@@ -127,7 +127,7 @@ export default {
           },
           wallet:{
             label:'ETH 钱包地址',
-            explain:'(仅用于发放糖果)',
+            // explain:'(仅用于发放糖果)',
             warning:'钱包地址不能为空'
           },
           amount: {
@@ -191,7 +191,7 @@ export default {
           id:'xkvj1kddk',
           value:'',
           required:true,
-          explain:true
+          // explain:true
           // help: {
           //   show:false,
           //   text:'',
