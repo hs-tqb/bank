@@ -3,8 +3,10 @@
   @import url(~assets/css/icons/success.less);
   @import url(~assets/css/icons/failure.less);
 
+  html, body , #__nuxt, #__layout, #__root, .page-container { height:100%; }
+  
   .dialog-container { 
-    position:fixed; top:0; left:0; z-index:1000; width:100vw; height:100vh; 
+    position:fixed; top:0; left:0; z-index:1000; width:100vw; height:100%; 
     background-color: rgba(0,0,0,.7);
     transition-duration:300ms;
     pointer-events:none; opacity:0;
