@@ -69,6 +69,17 @@ export default {
   },
   created() {
     // this.$store.commit('showMessageDialog', {type:'failure', text:'zzz', delay:100000000})
+  },
+  mounted() {
+    // console.log( process.env.NODE_ENV );
+    if ( process.env.NODE_ENV !== 'production' ) {
+      let script = document.createElement('script');
+      script.src = '//cdn.bootcss.com/eruda/1.4.2/eruda.min.js';
+      script.onload = function() {
+        window.eruda.init();
+      }
+      document.body.appendChild(script);
+    }
   }
 }
 </script>
