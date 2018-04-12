@@ -35,7 +35,7 @@
       <input type="button" class="btn text primary" value="注销" @click="logout">
     </div>
     <div id="account-info">
-      <h2>我的钱包余额: {{balance}} ETH ( ≈ 人民币{{cny}} )</h2>
+      <h2>我的钱包余额: {{balance}} ETH ( ≈ ￥{{cny}} )</h2>
       <h2>邀请有奖: {{mobile}}</h2>
     </div>
     <div class="btn-group">
