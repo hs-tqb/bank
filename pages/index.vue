@@ -163,7 +163,7 @@ export default {
           id:'kdfjliq',
           // regexp:/^\+?[\d- ]+\d+$/,
           regexp:/^1[3-9]\d{9}$/,
-          value:'17328397970',
+          value:'',
           required:true
         },
         vfCode:{
