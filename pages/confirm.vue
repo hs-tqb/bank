@@ -66,8 +66,8 @@
       <img :src="qrcode" width="100" height="100" />
       <div id="vpp-wallet">
         <!-- <p ref="vpp-wallet-address">sdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjfl.sl</p> -->
-        <input ref="vpp-wallet-address" type="text" :value="wallet">
-        <input type="button" class="btn" value="复制" @click="copyWallet"/>
+        <input readonly id="vpp-wallet-address" type="text" :value="wallet">
+        <input type="button" class="btn" data-clipboard-target="#vpp-wallet-address" value="复制"/>
       </div>
       <input type="button" class="btn primary" value="我已转账" @click="confirm" />
     </div>
@@ -99,6 +99,11 @@
 <script>
 import axios from '~/plugins/axios'
 export default {
+  head() {
+    return {
+      script:[{src:'/js/clipboard.min.js'}],
+    }
+  },
   data () {
     return {
       qrcode:'',
@@ -118,16 +123,24 @@ export default {
     }
   },
   methods: {
-    copyWallet() {
-      let input = this.$refs['vpp-wallet-address'];
-      input.select();
-      document.execCommand("copy")
-      this.$store.commit('showMessageDialog', {type:'success', text:'复制成功'});
+    initCopy() {
+      var clipboard = new ClipboardJS('.btn');
+      var vm = this;
+      clipboard.on('success', function(e) {
+        // console.info('Action:', e.action);
+        // console.info('Text:', e.text);
+        // console.info('Trigger:', e.trigger);
+        e.clearSelection();
+        vm.$store.commit('showMessageDialog', {type:'success', text:'复制成功'});
+      });
+      clipboard.on('error', function(e) {
+        document.querySelector('#vpp-wallet-address').removeAttribute('readonly');
+        vm.$store.commit('showMessageDialog', {type:'failure', text:'复制失败, 请手动选择复制'});
+      });
+
     },
     confirm() {
-      // console.log('confirm');
       this.dialogResult.show  = true;
-      // this.dialogResult.state = 'success';
     }
   },
   mounted() {
@@ -140,7 +153,9 @@ export default {
           });
       this.qrcode = resp.data.depositAccountCode;
       this.wallet = resp.data.depositAccount;
-    })
+    });
+
+    this.initCopy();
   }
 }
 </script>

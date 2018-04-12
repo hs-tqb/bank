@@ -97,7 +97,7 @@ export default {
   data () {
     return {
       cn  :{
-        title:'ValPromise 区块链银行 <span>Beta</span>',
+        title:'区块链银行 <span>Beta</span>',
         input: {
           name: {
             label:'姓名',
@@ -202,15 +202,15 @@ export default {
             return !isNaN(+this.value.trim()) && +this.value.trim()>=0.1;
           }
         },
-        // key:{
-        //   id:'sdkvfjfssl',
-        //   value:'',
-        //   required:true,
-        // }
-        wechat: {
-          id:'xkdusdjfsdfkusduf',
-          value:''
+        key:{
+          id:'sdkvfjfssl',
+          value:'',
+          required:true,
         }
+        // wechat: {
+        //   id:'xkdusdjfsdfkusduf',
+        //   value:''
+        // }
       },
       website: {
         official: 'http://valp.io',
@@ -297,7 +297,7 @@ export default {
         mobile:input.mobile.value,
         mobileCode:input.vfCode.value,
         withdrawalAccount:input.wallet.value,
-        invite:input.wechat.value
+        invite:input.key.value
       })
       .then(resp=>{
         resp = resp.data;
