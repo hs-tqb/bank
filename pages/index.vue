@@ -130,8 +130,8 @@ export default {
             warning:'ETH 数量不正确',
           },
           key:{
-            label:'糖果兑换码',
-            warning:'兑换码不能为空'
+            label:'邀请人手机号',
+            // warning:''
           },
           wechat: {
             label:'微信',
@@ -205,7 +205,6 @@ export default {
         key:{
           id:'sdkvfjfssl',
           value:'',
-          required:true,
         }
         // wechat: {
         //   id:'xkdusdjfsdfkusduf',
