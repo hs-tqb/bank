@@ -99,11 +99,11 @@
 <script>
 import axios from '~/plugins/axios'
 export default {
-  head() {
-    return {
-      script:[{src:'/js/clipboard.min.js'}],
-    }
-  },
+  // head() {
+  //   return {
+  //     script:[{src:'/js/clipboard.min.js'}],
+  //   }
+  // },
   data () {
     return {
       qrcode:'',
@@ -127,9 +127,6 @@ export default {
       var clipboard = new ClipboardJS('.btn');
       var vm = this;
       clipboard.on('success', function(e) {
-        // console.info('Action:', e.action);
-        // console.info('Text:', e.text);
-        // console.info('Trigger:', e.trigger);
         e.clearSelection();
         vm.$store.commit('showMessageDialog', {type:'success', text:'复制成功'});
       });
@@ -162,9 +159,11 @@ export default {
       this.wallet = resp.data.depositAccount;
     });
 
-    // this.initCopy();
-    // document.addEventListener('DOMContentLoaded', this.documentReady);
-    window.onload = this.initCopy;
+    // 载入点击复制的插件
+    var script = document.createElement('script');
+    script.src = '/js/clipboard.min.js';
+    script.onload = this.initCopy;
+    document.body.appendChild(script);
   }
 }
 </script>
