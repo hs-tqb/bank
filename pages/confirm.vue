@@ -66,7 +66,7 @@
       <img :src="qrcode" width="100" height="100" />
       <div id="vpp-wallet">
         <!-- <p ref="vpp-wallet-address">sdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjfl.sl</p> -->
-        <input disabled ref="vpp-wallet-address" type="text" :value="wallet">
+        <input ref="vpp-wallet-address" type="text" :value="wallet">
         <input type="button" class="btn" value="复制" @click="copyWallet"/>
       </div>
       <input type="button" class="btn primary" value="我已转账" @click="confirm" />
