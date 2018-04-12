@@ -301,7 +301,10 @@ export default {
       })
       .then(resp=>{
         resp = resp.data;
-        if ( resp.state !== 1 ) return;
+        if ( resp.state !== 1 ) return this.$store.commit('showMessageDialog', {
+            type:'failure', 
+            text:resp.message
+          });
         localStorage.setItem('token', resp.data.token);
         this.$router.push('/confirm');
       })

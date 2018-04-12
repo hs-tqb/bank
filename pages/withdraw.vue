@@ -122,12 +122,15 @@ export default {
       await this.$http.post('/customer/getMobile', {token:localStorage.getItem('token')})
         .then(resp=>{
           resp = resp.data;
-          if ( resp.state !== 1 ) return;
+          if ( resp.state !== 1 ) return this.$store.commit('showMessageDialog', {
+            type:'failure', 
+            text:resp.message
+          });
           mobile = resp.data.mobile;
         });
 
 
-      axios.post('/customer/getMobileCode', {mobile:mobile} )
+      this.$http.post('/customer/getMobileCode', {mobile:mobile} )
       // axios.get('/customer/getMobileCode', {params:{mobile:mobile.value}} )
         .then(resp=>{ 
           resp = resp.data;

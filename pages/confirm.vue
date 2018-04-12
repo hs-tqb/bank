@@ -134,7 +134,10 @@ export default {
     this.$http.post('/customer/getDepositAccount', { token:localStorage.getItem('token') })
     .then(resp=>{
       resp = resp.data;
-      if ( resp.state !== 1 ) return;
+      if ( resp.state !== 1 ) return this.$store.commit('showMessageDialog', {
+            type:'failure', 
+            text:resp.message
+          });
       this.qrcode = resp.data.depositAccountCode;
       this.wallet = resp.data.depositAccount;
     })

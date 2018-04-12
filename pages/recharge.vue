@@ -134,7 +134,10 @@ export default {
       await this.$http.post('/customer/getMobile', {token:localStorage.getItem('token')})
         .then(resp=>{
           resp = resp.data;
-          if ( resp.state !== 1 ) return;
+          if ( resp.state !== 1 ) return this.$store.commit('showMessageDialog', {
+            type:'failure', 
+            text:resp.message
+          });
           mobile = resp.data.mobile;
         });
 

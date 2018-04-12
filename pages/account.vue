@@ -74,8 +74,9 @@ export default {
       this.$http.post('/customer/loginOut', {token:localStorage.getItem('token')})
       .then(resp=>{
         resp=resp.data;
-        if ( resp.state !== 1 ) 
-        return this.$store.commit('showMessageDialog', {type:'failure', text:'注销失败'});
+        if ( resp.state !== 1 ) return this.$store.commit('showMessageDialog', {
+          type:'failure', text:'注销失败'}
+        );
         this.$store.commit('showMessageDialog', {type:'failure', text:'注销成功, 即将跳转'});
         localStorage.setItem('token', '');
         setTimeout(()=>{
@@ -93,7 +94,10 @@ export default {
     this.$http.post('/customer/customerDetail', {token:localStorage.getItem('token')})
     .then(resp=>{
       resp=resp.data;
-      if ( resp.state !== 1 ) return;
+      if ( resp.state !== 1 ) return this.$store.commit('showMessageDialog', {
+        type:'failure', 
+        text:resp.message
+      });
       this.id = resp.data.id;
       this.name = resp.data.name;
       this.mobile = resp.data.mobile;
