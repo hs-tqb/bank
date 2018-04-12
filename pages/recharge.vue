@@ -116,7 +116,6 @@ export default {
       this.$router.push('/confirm');
     },
     call(name, opt) {
-      console.log( name, opt );
       this[name](opt);
     },
     async sendSMSCode({key}) {
