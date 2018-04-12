@@ -13,4 +13,8 @@ const env = {
   }
 }
 
-export default env[process.env.ENV_NAME];
+// console.log('____________________');
+// console.log(process.env.ENV_NAME || process.env.NODE_ENV); 
+// console.log('____________________');
+
+export default env[process.env.ENV_NAME || process.env.NODE_ENV];

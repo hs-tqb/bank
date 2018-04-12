@@ -5,7 +5,7 @@
   "author": "HS <huangshuai@utianqi.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env ENV_NAME=develepment nuxt",
+    "dev": "cross-env ENV_NAME=development nuxt",
     "joint": "cross-env ENV_NAME=joint nuxt",
     "test": "cross-env PORT=3001 cross-env ENV_NAME=test nuxt",
     "start": "cross-env ENV_NAME=production nuxt start",
