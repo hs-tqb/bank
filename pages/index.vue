@@ -126,7 +126,7 @@ export default {
           },
           amount: {
             label:'ETH 数量',
-            explain:'(不得少于0.1个)',
+            explain:'(至少0.1个)',
             warning:'ETH 数量不正确',
           },
           key:{
@@ -137,7 +137,7 @@ export default {
             label:'微信',
           }
         },
-        confirm:'领取',
+        confirm:'转入',
         website: {
           official: '官网',
           telegram: '电报群'

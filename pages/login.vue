@@ -136,6 +136,9 @@ export default {
         this.$router.push('/account');
       })
     },
+    call(name, props) {
+      this[name](props);
+    },
     sendSMSCode({key}) {
       // 如果手机号非法，则中断操作
       let mobile = this.input.mobile;

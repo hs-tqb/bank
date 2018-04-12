@@ -4,7 +4,7 @@
     height:100%; display:flex; flex-direction:column;
     background-color:#ddd;
     #wallet { 
-      height:40vh; background-color:#fff; text-align:center; 
+      background-color:#fff; text-align:center; 
       h1 { margin:10px 0 20px 0; }
       input[type=button] { height:auto; }
       #vpp-wallet {
@@ -18,7 +18,7 @@
           -webkit-box-orient: vertical;
         }
       }
-      .btn.primary { width:120px; .radius(4px); }
+      .btn.primary { margin-bottom:20px; width:120px; .radius(4px); }
     }
     #tips { 
       padding:25px;
@@ -63,7 +63,7 @@
   <div id="page-confirm">
     <div id="wallet" class="panel">
       <h1>充值地址</h1>
-      <img :src="qrcode" width="80" height="80" />
+      <img :src="qrcode" width="100" height="100" />
       <div id="vpp-wallet">
         <!-- <p ref="vpp-wallet-address">sdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjfl.sl</p> -->
         <input disabled ref="vpp-wallet-address" type="text" :value="wallet">
