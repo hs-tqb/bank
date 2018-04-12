@@ -31,15 +31,16 @@
       // background:transparent;
       .outer-wrapper { padding:20px; height:100%; display:flex; align-items:center; }
       .inner-wrapper { 
-        .relative; display:flex; flex-direction:column;
+        .relative; display:flex; flex-direction:column; word-wrap:break-word; word-break:break-all;
         margin-top:-50px; padding:15px; 
         background:#fff; 
         .radius(10px); 
         img { .block; margin:0 auto; }
-        h2 { margin:12px 0; font-size:16px; text-align:center; color:@color-primary; }
-        p { line-height:1.4; font-size:12px; }
-        p + a { .block; margin:25px 0; }
-        .placeholder { .flex(1); }
+        h2 { margin:20px 0; font-size:16px; line-height:1.4; text-align:center; color:@color-primary; }
+        // p { line-height:1.4; font-size:12px; }
+        // p + a { .block; margin:25px 0; }
+        // .placeholder { .flex(1); }
+        h2 + a { margin:10px; line-height:35px; .radius(4px); }
         .website a { padding:5px 0; }
 
         &.failure { 
@@ -62,7 +63,7 @@
   <div id="page-confirm">
     <div id="wallet" class="panel">
       <h1>充值地址</h1>
-      <img src="" width="80" height="80" />
+      <img :src="qrcode" width="80" height="80" />
       <div id="vpp-wallet">
         <!-- <p ref="vpp-wallet-address">sdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjfl.sl</p> -->
         <input disabled ref="vpp-wallet-address" type="text" :value="wallet">
@@ -83,11 +84,11 @@
           <a href="javascript:void(0)" class="close" @click="dialogResult.show=false"></a>
           <img src="~/assets/img/icons/success.png" width="60" height="60" v-if="dialogResult.state==='success'">
           <img src="~/assets/img/icons/failure.png" width="60" height="60" v-else>
-          <h2>{{dialogResult[dialogResult.state].title}}</h2>
-          <p>{{dialogResult[dialogResult.state].text}}</p>
-          <a href="http://valp.io">
+          <h2>{{dialogResult[dialogResult.state].title}}: {{wallet}}</h2>
+          <!-- <p>{{dialogResult[dialogResult.state].text}}</p> -->
+          <!-- <a href="http://valp.io">
             <img src="~/assets/img/activity.png">
-          </a>
+          </a> -->
           <a href="javascript:void(0)" class="btn primary" @click="$router.push('/account')">进入账户</a>
         </div>
       </div>
@@ -96,20 +97,22 @@
 </template>
 
 <script>
+import axios from '~/plugins/axios'
 export default {
   data () {
     return {
-      wallet:'sdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjflsdksdjhskskdjflskdjfl',
+      qrcode:'',
+      wallet:'',
       dialogResult: {
         show:false,
-        state:'',
+        state:'success',
         success: {
-          title:'title.....',
-          text :'xxxxxxxxxx'
+          title:'提交成功！我们会在1个工作日内完成审核，您的钱包地址为 ',
+          // text :'xxxxxxxxxx'
         },
         failure: {
           title:'title.....',
-          text :'xxxxxxxxxx'
+          // text :'xxxxxxxxxx'
         }
       }
     }
@@ -123,9 +126,18 @@ export default {
     },
     confirm() {
       // console.log('confirm');
-      this.dialogResult.state = 'success';
       this.dialogResult.show  = true;
+      // this.dialogResult.state = 'success';
     }
+  },
+  mounted() {
+    this.$http.post('/customer/getDepositAccount', { token:localStorage.getItem('token') })
+    .then(resp=>{
+      resp = resp.data;
+      if ( resp.state !== 1 ) return;
+      this.qrcode = resp.data.depositAccountCode;
+      this.wallet = resp.data.depositAccount;
+    })
   }
 }
 </script>

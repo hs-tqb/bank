@@ -93,12 +93,6 @@
 </template>
 
 <script>
-import axios from '~/plugins/axios'
-const host = process.env.NODE_ENV==='production'? 
-  '//bot.valp.io':
-  '//119.28.60.230:8280';
-  // '//192.168.1.159:8008';
-
 export default {
   data () {
     return {
@@ -169,7 +163,7 @@ export default {
           id:'kdfjliq',
           // regexp:/^\+?[\d- ]+\d+$/,
           regexp:/^1[3-9]\d{9}$/,
-          value:'13243708203',
+          value:'17328397970',
           required:true
         },
         vfCode:{
@@ -247,8 +241,7 @@ export default {
         });
       }
 
-      axios.post(host+'/candy/getCode', {mobile:mobile.value} )
-      // axios.get(host+'/candy/getCode', {params:{mobile:mobile.value}} )
+      this.$http.post('/customer/getMobileCode', {mobile:mobile.value} )
         .then(resp=>{ 
           resp = resp.data;
           if ( resp.state !== 1 ) throw resp.message;
@@ -284,16 +277,6 @@ export default {
       let temp      = null;
       for ( let p in input ) {
         temp = input[p];
-        // if ( !temp.required ) {
-        //   if ( temp.value && temp.regexp && !temp.regexp.test(temp.value) ) {
-        //     return this.$store.commit('showMessageDialog', {
-        //       type:'failure', 
-        //       text:this.lang.input[p].warning
-        //     });
-        //   } else {
-        //     continue;
-        //   }
-        // }
         if ( 
           temp.required? 
           (!temp.value || (temp.regexp&&!temp.regexp.test(temp.value)) || (temp.verify&&!temp.verify()) ):
@@ -307,10 +290,21 @@ export default {
             text:this.lang.input[p].warning
           });
         }
-      }
+      };
 
-
-      this.$router.push('/confirm');
+      this.$http.post('/customer/register', {
+        name:input.name.value,
+        mobile:input.mobile.value,
+        mobileCode:input.vfCode.value,
+        withdrawalAccount:input.wallet.value,
+        invite:input.wechat.value
+      })
+      .then(resp=>{
+        resp = resp.data;
+        if ( resp.state !== 1 ) return;
+        localStorage.setItem('token', resp.data.token);
+        this.$router.push('/confirm');
+      })
     }
   }
 }

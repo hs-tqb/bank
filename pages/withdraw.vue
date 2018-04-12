@@ -113,27 +113,31 @@ export default {
         }
       }
     },
-    sendSMSCode({key}) {
+    call(name, props) {
+      this[name](props);
+    },
+    async sendSMSCode({key}) {
       // 如果手机号非法，则中断操作
-      let mobile = this.input.mobile;
-      if ( !mobile.regexp.test(mobile.value) ) {
-        return this.$store.commit('showMessageDialog', {
-          type:'failure',
-          text:this.lang.input.mobile.warning
+      let mobile = '';
+      await this.$http.post('/customer/getMobile', {token:localStorage.getItem('token')})
+        .then(resp=>{
+          resp = resp.data;
+          if ( resp.state !== 1 ) return;
+          mobile = resp.data.mobile;
         });
-      }
 
-      axios.post(host+'/candy/getCode', {mobile:mobile.value} )
-      // axios.get(host+'/candy/getCode', {params:{mobile:mobile.value}} )
+
+      axios.post('/customer/getMobileCode', {mobile:mobile} )
+      // axios.get('/customer/getMobileCode', {params:{mobile:mobile.value}} )
         .then(resp=>{ 
           resp = resp.data;
           if ( resp.state !== 1 ) throw resp.message;
           // 倒计时逻辑
-          let btn = this.lang.input.vfCode.addition;
+          let btn = this.input.verifyCode.addition;
           let secs = 60;
           let timer = -1;
           
-          this.input.vfCode.addition.disabled = true;
+          this.input.verifyCode.addition.disabled = true;
           btn.bakText  = btn.text;
           btn.text = btn.countDownText.replace('#placeholder#', secs);
           
@@ -141,7 +145,7 @@ export default {
             if (--secs === 0 ) {
               clearInterval(timer);
               btn.text = btn.bakText;
-              this.input.vfCode.addition.disabled = false;
+              this.input.verifyCode.addition.disabled = false;
             } else {
               btn.text = btn.countDownText.replace('#placeholder#', secs);
             }

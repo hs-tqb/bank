@@ -31,12 +31,12 @@
   <div id="page-account">
     <div id="user-info">
       <!-- <p>{{id}}</p> -->
-      {{id}}
-      <input type="button" class="btn text primary" value="注销">
+      {{name}}
+      <input type="button" class="btn text primary" value="注销" @click="logout">
     </div>
     <div id="account-info">
-      <h2>我的钱包余额: {{balance}} ETH</h2>
-      <h2>邀请有奖: 邀请码 {{id}}</h2>
+      <h2>我的钱包余额: {{balance}} ETH ( ≈ 人民币{{cny}} )</h2>
+      <h2>邀请有奖: {{mobile}}</h2>
     </div>
     <div class="btn-group">
       <input type="button" class="btn block" value="转入" @click="$router.push('/recharge')"/>
@@ -57,11 +57,49 @@
 
 <script>
 export default {
+  asyncData() {
+
+  },
   data () {
     return {
-      id:'13131313131',
-      balance:300
+      id:'',
+      name:'',
+      balance:0,
+      mobile:'',
+      cny:0,
     }
+  },
+  methods: {
+    logout() {
+      this.$http.post('/customer/loginOut', {token:localStorage.getItem('token')})
+      .then(resp=>{
+        resp=resp.data;
+        if ( resp.state !== 1 ) 
+        return this.$store.commit('showMessageDialog', {type:'failure', text:'注销失败'});
+        this.$store.commit('showMessageDialog', {type:'failure', text:'注销成功, 即将跳转'});
+        localStorage.setItem('token', '');
+        setTimeout(()=>{
+          this.$router.push('/');
+        }, 1000);
+      })
+    }
+  },
+  mounted() {
+    if ( !localStorage.getItem('token') ) {
+      this.$router.replace('/login');
+      return;
+    }
+
+    this.$http.post('/customer/customerDetail', {token:localStorage.getItem('token')})
+    .then(resp=>{
+      resp=resp.data;
+      if ( resp.state !== 1 ) return;
+      this.id = resp.data.id;
+      this.name = resp.data.name;
+      this.mobile = resp.data.mobile;
+      this.balance = resp.data.balance;
+      this.cny = resp.data.cny;
+    })
   }
 }
 </script>

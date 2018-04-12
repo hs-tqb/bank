@@ -19,6 +19,11 @@ module.exports = {
   ** Customize the progress bar color
   */
   loading: { color: '#3B8070' },
+  // env
+  env: {
+    // PATH_TYPE: process.env.PATH_TYPE
+    ENV_NAME:process.env.ENV_NAME
+  },
   /*
   ** Build configuration
   */

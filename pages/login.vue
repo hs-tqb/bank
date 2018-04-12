@@ -60,7 +60,7 @@ export default {
           id:'kdfjliq',
           // regexp:/^\+?[\d- ]+\d+$/,
           regexp:/^1[3-9]\d{9}$/,
-          value:'13243708203',
+          value:'',
           required:true,
           label:'手机号',
           warning:'无效的手机号'
@@ -121,6 +121,17 @@ export default {
           });
         }
       }
+
+      this.$http.post('/customer/login', {
+        mobile:this.input.mobile.value,
+        mobileCode:this.input.verifyCode.value
+      })
+      .then(resp=>{
+        resp = resp.data;
+        if ( resp.state !== 1 ) return;
+        localStorage.setItem('token', resp.data.token);
+        this.$router.push('/account');
+      })
     },
     sendSMSCode({key}) {
       // 如果手机号非法，则中断操作
@@ -128,21 +139,21 @@ export default {
       if ( !mobile.regexp.test(mobile.value) ) {
         return this.$store.commit('showMessageDialog', {
           type:'failure',
-          text:this.lang.input.mobile.warning
+          text:this.input.mobile.warning
         });
       }
 
-      axios.post(host+'/candy/getCode', {mobile:mobile.value} )
-      // axios.get(host+'/candy/getCode', {params:{mobile:mobile.value}} )
+      this.$http.post('/customer/getMobileCode', {mobile:mobile.value} )
+      // axios.get('/customer/getMobileCode', {params:{mobile:mobile.value}} )
         .then(resp=>{ 
           resp = resp.data;
           if ( resp.state !== 1 ) throw resp.message;
           // 倒计时逻辑
-          let btn = this.lang.input.vfCode.addition;
+          let btn = this.input.verifyCode.addition;
           let secs = 60;
           let timer = -1;
           
-          this.input.vfCode.addition.disabled = true;
+          this.input.verifyCode.addition.disabled = true;
           btn.bakText  = btn.text;
           btn.text = btn.countDownText.replace('#placeholder#', secs);
           
@@ -150,7 +161,7 @@ export default {
             if (--secs === 0 ) {
               clearInterval(timer);
               btn.text = btn.bakText;
-              this.input.vfCode.addition.disabled = false;
+              this.input.verifyCode.addition.disabled = false;
             } else {
               btn.text = btn.countDownText.replace('#placeholder#', secs);
             }
