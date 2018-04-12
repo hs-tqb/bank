@@ -124,6 +124,7 @@ export default {
   },
   methods: {
     initCopy() {
+      if ( !window.ClipboardJS ) return setTimeout(initCopy, 300);
       var clipboard = new ClipboardJS('.btn');
       var vm = this;
       clipboard.on('success', function(e) {
