@@ -124,7 +124,6 @@ export default {
   },
   methods: {
     initCopy() {
-      if ( !window.ClipboardJS ) return setTimeout(initCopy, 300);
       var clipboard = new ClipboardJS('.btn');
       var vm = this;
       clipboard.on('success', function(e) {
@@ -142,6 +141,13 @@ export default {
     },
     confirm() {
       this.dialogResult.show  = true;
+    },
+    documentReady() {
+      document.addEventListener('DOMContentLoaded',()=>{
+        //注销时间，避免重复触发
+        document.removeEventListener('DOMContentLoaded',this.documentReady,false);
+        this.initCopy();
+      },false);
     }
   },
   mounted() {
@@ -156,7 +162,9 @@ export default {
       this.wallet = resp.data.depositAccount;
     });
 
-    this.initCopy();
+    // this.initCopy();
+    // document.addEventListener('DOMContentLoaded', this.documentReady);
+    window.onload = this.initCopy;
   }
 }
 </script>
